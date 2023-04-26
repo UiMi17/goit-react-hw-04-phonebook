@@ -34,10 +34,12 @@ export const App = () => {
     });
 
     if (!CONTACTS_NAMES.includes(USERNAME)) {
-      setContacts([
-        ...contacts,
-        { name: USERNAME, number: USER_NUMBER, id: nanoid() },
-      ]);
+      setContacts((prevState) => {
+        return [
+          ...prevState,
+          { name: USERNAME, number: USER_NUMBER, id: nanoid() },
+        ]
+      });
     } else {
       alert(`${USERNAME} is already in contacts.`);
     }
@@ -46,16 +48,17 @@ export const App = () => {
   const handleFormSubmit = ev => {
     ev.preventDefault();
     createContact(ev);
+    ev.currentTarget.reset()
   };
 
   const handleSearchInputChange = ev => {
     setFilter(ev.target.value);
   };
 
-  const handleDeleteBtnClick = ev => {
-    const CONTACT_ID = ev.target.getAttribute('id');
-
-    setContacts(contacts.filter(contact => contact.id !== CONTACT_ID));
+  const handleDeleteBtnClick = (id) => {
+    setContacts((prevState) => {
+      return prevState.filter(contact => contact.id !== id)
+    });
   };
 
   const filteredContacts = contacts.filter(contact => {

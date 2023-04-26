@@ -8,7 +8,12 @@ const ContactsListElement = ({ name, number, id, handleDeleteBtnClick }) => {
         <p>
           {name}: {number}
         </p>
-        <StyledButton type="button" id={id} onClick={handleDeleteBtnClick}>
+        <StyledButton
+          type="button"
+          onClick={() => {
+            handleDeleteBtnClick(id);
+          }}
+        >
           Delete
         </StyledButton>
       </StyledLi>
@@ -21,6 +26,5 @@ export default ContactsListElement;
 ContactsListElement.propTypes = {
   name: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
   handleDeleteBtnClick: PropTypes.func.isRequired,
 };
